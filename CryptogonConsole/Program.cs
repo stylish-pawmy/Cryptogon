@@ -1,0 +1,1 @@
+﻿MarkupLine("Welcome to [bold blue]Cryptogon![/] Your friendly [italic yellow](and a little outdated)[/] cryptography companion.");
