@@ -6,7 +6,7 @@ namespace CryptogonCoreLib;
 
 public static class HillCipher
 {
-    public static List<char> Scheme { get; set; } = new();
+    public static Dictionary<char, int> Scheme { get; set; } = new();
 
     private static string? _key;
     public static string? Key
@@ -32,9 +32,9 @@ public static class HillCipher
                 );
             }
 
-            foreach(char symbol in value)
+            foreach (char symbol in value)
             {
-                if (!Scheme.Contains(symbol))
+                if (!Scheme.Keys.Contains(symbol))
                 {
                     throw new ArgumentException(
                         message: "The key cannot be composed of " +
@@ -149,40 +149,5 @@ public static class HillCipher
         }
 
         return keyMatrix;
-    }
-
-    /// <summary>
-    /// Adds a symbol to the scheme if it does not already exist.
-    /// </summary>
-    /// <param name="symbol"></param>
-    /// <exception cref="ArgumentException"></exception>
-    public static void AddSymbol(char symbol)
-    {
-        if (!Scheme.Contains(symbol))
-        {
-            Scheme.Add(symbol);
-        }
-        else
-        {
-            throw new ArgumentException(
-                message: "Symbol does not exist in the scheme.",
-                paramName: nameof(symbol)
-            );
-        }
-    }
-
-    public static void RemoveSymbole(char symbol)
-    {
-        if (Scheme.Contains(symbol))
-        {
-            Scheme.Remove(symbol);
-        }
-        else
-        {
-            throw new ArgumentException(
-                message: "Symbol does not exist in the scheme.",
-                paramName: nameof(symbol)
-            );
-        }
     }
 }
