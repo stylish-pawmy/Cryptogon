@@ -8,8 +8,9 @@ for (int i = 0; i < symbols.Length; i++)
 }
 
 HillCipher.BlockSize = 3;
-HillCipher.Key = "ABFGRTDXC";
+HillCipher.Key = "KEYMAPHOW";
 
 MarkupLine($"The key is {HillCipher.Key}");
 
-WriteLine(HillCipher.Encrypt("Whatever"));
+WriteLine(HillCipher.Encrypt("OESIXBGHK"));
+HillCipher.CalculateDeterminant(new int[,] { { 0, 1, 5 }, { 6, 17, 19 }, { 3, 23, 2 } });
