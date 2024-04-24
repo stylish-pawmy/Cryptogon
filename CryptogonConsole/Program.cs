@@ -6,4 +6,4 @@ HillCipher.Key = "ABFGRTDXC";
 
 MarkupLine($"The key is {HillCipher.Key}");
 
-MarkupLine($"The cipher text is: [italic purple]{HillCipher.Encrypt("Whatever")}[/]");
+WriteLine(HillCipher.Encrypt("Whatever"));

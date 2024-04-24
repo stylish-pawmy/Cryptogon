@@ -1,4 +1,6 @@
 ﻿using System.Diagnostics;
+using System.Security.Authentication.ExtendedProtection;
+using System.Linq;
 
 namespace CryptogonCoreLib;
 
@@ -81,9 +83,54 @@ public static class HillCipher
     /// <returns>Ciphertext</returns>
     public static string Encrypt(string plaintext)
     {
-        return "Cipher text";
+        int[,] keyMatrix = KeyMatrix();
+
+        List<int[]> blocks = new();
+        for (int i = 0; i < plaintext.Length; i += BlockSize)
+        {
+            blocks.Add(GetBlockVector(plaintext, i / BlockSize));
+        }
+
+        return "";
     }
 
+    /// <summary>
+    /// Returns a block from a string following the specified BlockSize
+    /// and given a block index
+    /// </summary>
+    /// <returns></returns>
+    private static int[] GetBlockVector(string text, int index)
+    {
+        string blockText = (text.Length - index * BlockSize < BlockSize)
+        ? text.Substring(
+            Math.Min(text.Length, index * BlockSize),
+            Math.Min(text.Length, text.Length - index * BlockSize)
+        )
+        : text.Substring(
+            index * BlockSize,
+            BlockSize
+        );
+
+        if (blockText.Length == 0)
+        {
+            throw new ArgumentOutOfRangeException();
+        }
+
+        while (blockText.Length < BlockSize)
+        {
+            blockText += 'Z';
+        }
+
+        return blockText
+        .Select(symbol => (int)symbol)
+        .ToArray();
+    }
+
+    /// <summary>
+    /// Generates a key matrix based on the already stored Key
+    /// </summary>
+    /// <returns>Key Matrix</returns>
+    /// <exception cref="NullReferenceException"></exception>
     public static int[,] KeyMatrix()
     {
         if (Key is null)
@@ -104,6 +151,11 @@ public static class HillCipher
         return keyMatrix;
     }
 
+    /// <summary>
+    /// Adds a symbol to the scheme if it does not already exist.
+    /// </summary>
+    /// <param name="symbol"></param>
+    /// <exception cref="ArgumentException"></exception>
     public static void AddSymbol(char symbol)
     {
         if (!Scheme.Contains(symbol))
